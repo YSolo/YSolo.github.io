@@ -1,0 +1,149 @@
+/* quick reset */
+h1, h2, h3, h4, h5, h6, p, ul{
+  margin: 0 0 0.5em 0;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+  padding-left:10px;
+}
+
+.page {
+  background: linear-gradient(snow 0%, gray 100%);
+  background-attachment: fixed;
+  font-family:'Roboto Mono', monospace;
+  color: dimgray;
+  margin: 0;
+}
+
+.header {
+  background-color: white;
+  border-bottom: 1px solid silver;
+}
+
+.page-title {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.header__page-title {
+  padding: 0.5em 0 0.5em 80px;
+  position: relative;
+  display: flex;
+}
+
+.page__main {
+  padding: 20px 60px;
+  margin: 0px 20px;
+}
+
+.main {
+  background: white;
+  border-radius: 0.1em;
+}
+
+.task {
+  margin-bottom: 2em;
+}
+
+.task__title {
+  text-decoration: underline;
+}
+
+.task_requirements {
+  color: darkgrey;
+  font-style: italic;
+  margin-bottom: 30px;
+}
+
+.button {
+  padding: 0.5em;
+  border: 0.2em solid darkgrey;
+  background: transparent;
+  font: 16px monospace;
+  transition: all 0.2s;
+  border-radius: 0.2em;
+}
+
+.button:hover {
+  background: darkgrey;
+  color: white
+}
+
+.button:active {
+  background: grey;
+}
+
+/* Task specific css */
+.box-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.box {
+  height: 100px;
+  width: 100px;
+  background-color: steelblue;
+  margin: 10px;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+}
+
+.note {
+  opacity: 80%;
+  padding: 5px;
+  margin: 10px;
+  background-color: white;
+}
+
+.box_isHled {
+  background-color: cornflowerblue;
+}
+
+.collapsables_title {
+  cursor: pointer;
+}
+
+.collapsables_title:hover {
+  text-decoration: underline;
+}
+
+.hidden {
+  display:none;
+}
+
+.tabs-container_content {
+  width: auto;
+  height: 60px;
+  padding: 20px;
+  background-color: lightgrey;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content_current {
+  display: block;
+}
+
+.tabs {
+  display: flex;
+}
+
+.tab {
+  background-color: silver;
+  height: auto;
+  width: 100px;
+  padding: 5px 10px;
+  border-radius: 10px 10px 0 0;
+  border-right: 1px solid dimgray;
+  cursor: pointer;
+}
+
+.tab_active {
+  background-color: lightgrey;
+}

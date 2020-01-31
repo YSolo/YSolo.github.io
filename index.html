@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="assets/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <title>Lesson 16 - Homework</title>
+  </head>
+
+  <body class="page">
+
+  <header class="header">
+    <div class="header__page-title page-title">ДЗ - Урок 16</div>
+  </header>
+
+  <div class="main page__main">
+
+    <div class="task main__task">
+      <h3 class="task_title">Задание 1</h3>
+
+      <p class="task_requirements">
+        Перепешите подсказки и сворачивающиеся блоки на jQuery.
+      </p>
+
+      <div class="task_impltmentation">
+
+        <div class="box-container">
+
+          <div class="box" data-note="Press me"></div>
+          <div class="box" data-note="Eat me"></div>
+          <div class="box" data-note="Drink me"></div>
+          <div class="box" data-note="I'm tired, go away"></div>
+          <div class="box" data-note="There's no-one here"></div>
+
+        </div>
+
+        <div class="collapsables">
+
+          <h4 class="collapsables_title">Преподаватели</h4>
+          <ul class="collapsables_list hidden">
+            <li>Сергей</li>
+            <li>Константин</li>
+          </ul>
+
+          <h4 class="collapsables_title">Студенты</h4>
+          <ul class ="collapsables_list hidden">
+            <li>Пушкин</li>
+            <li>Лермонтов</li>
+            <li>Рахманинов</li>
+          </ul>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="task main__task">
+      <h3 class="task_title">Задание 2</h3>
+
+      <p class="task_requirements">
+        Сделайте табы. При открытие таба в хеш должен записываться
+        ID соотв. таб. Если при открытии страницы в адресе есть хеш,
+        то должен открыться соотв. таб.
+      </p>
+
+      <div class="task_impltmentation">
+
+        <div class="tabs-container">
+
+          <div class="tabs">
+            <div class="tab tab_active" data-target="tab-1">1. Hello</div>
+            <div class="tab" data-target="tab-2">2. Bye</div>
+            <div class="tab" data-target="tab-3">3. Hi</div>
+          </div>
+          <div class="tabs-container_content">
+            <div id="tab-1"class="tab-content tab-content_current">Hello Monthy, how is it?</div>
+            <div id="tab-2"class="tab-content">Bye, buddy, see ya' later!</div>
+            <div id="tab-3"class="tab-content">Hi again. Did you miss me?</div>
+          </div>
+        </div>
+
+
+
+
+      </div>
+
+    </div>
+
+
+
+
+
+  </div>
+
+
+
+  <script src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  <script type="text/javascript" src="assets/main.js"></script>
+
+  </body>
+</html>

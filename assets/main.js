@@ -9,6 +9,7 @@ function Task(title, description) {
   this.done = false;
   this.collapsed = description ? false : true;
   this.id = Date.now().toString(36) + Math.random().toString(36).substring(2,5);
+  this.date = new Date();
 }
 
 // create div structure for the given Task
@@ -16,6 +17,7 @@ function createTaskDiv(taskObj) {
   // general container
   const $taskDiv = document.createElement('div')
   $taskDiv.className = 'task';
+  $taskDiv.id = taskObj.id;
 
     // task title
     const $taskTitleDiv = document.createElement('div');
@@ -25,20 +27,29 @@ function createTaskDiv(taskObj) {
       const $taskTitleName = document.createElement('h3');
       $taskTitleName.className = 'task_title_name';
       $taskTitleName.textContent = taskObj.title;
+      if (taskObj.done) {
+        $taskTitleName.classList.add('done');
+      };
       $taskTitleDiv.appendChild($taskTitleName);
 
       const $taskButtons = document.createElement('div');
       $taskButtons.className = 'task-buttons';
 
+        const $taskButtonRemove = document.createElement('button');
+        $taskButtonRemove.className = 'button task_button';
+        $taskButtonRemove.setAttribute('data-action', 'remove');
+        $taskButtonRemove.textContent = 'Remove';
+        $taskButtons.appendChild($taskButtonRemove);
+
         const $taskButtonCollapse = document.createElement('button');
         $taskButtonCollapse.className = 'button task_button';
-        $taskButtonCollapse.setAttribute('data-aciton', 'collapse');
+        $taskButtonCollapse.setAttribute('data-action', 'collapse');
         $taskButtonCollapse.textContent = 'Collapse';
         $taskButtons.appendChild($taskButtonCollapse);
 
         const $taskButtonDone = document.createElement('button');
         $taskButtonDone.className = 'button task_button';
-        $taskButtonDone.setAttribute('data-aciton', 'done');
+        $taskButtonDone.setAttribute('data-action', 'done');
         $taskButtonDone.textContent = 'Done';
         $taskButtons.appendChild($taskButtonDone);
 
@@ -49,6 +60,11 @@ function createTaskDiv(taskObj) {
   const $taskDescription = document.createElement('p');
   $taskDescription.className = 'task_description';
   $taskDescription.textContent = taskObj.description;
+  if (taskObj.done) {
+    $taskDescription.classList.add('done');
+  } else if (taskObj.collapsed) {
+    $taskDescription.hidden = true;
+  }
   $taskDiv.appendChild($taskDescription);
 
   return $taskDiv;
@@ -117,8 +133,15 @@ document.querySelector('.new-task-form')
       const title = form.querySelector('.task_title_name').value;
       const descr = form.querySelector('.task_description').value;
 
+      if (!title) {
+        alert('Please enter valid task name');
+        return;
+      }
+
       const task = new Task(title, descr);
       taskData.unshift(task);
+      renderTasks(taskData);
+
       form.reset();
       form.querySelector('.task_title_name').focus();
     }
@@ -127,15 +150,38 @@ document.querySelector('.new-task-form')
 document.querySelector('.task-container')
   .addEventListener('click', e => {
     const target = e.target;
+    const task = target.closest('.task');
+    const title = task.querySelector('.task_title_name');
+    const descr = task. querySelector('.task_description');
+    const taskObject = taskData.find(taskObj => taskObj.id === task.id);
 
     if (target.dataset.action === 'collapse') {
-      target.closest('.task').lastElementChild.hidden = true;
+      taskObject.collapsed = true;
+
+      descr.hidden = true;
       target.dataset.action = 'description';
       target.textContent = 'Description';
 
     } else if (target.dataset.action === 'description') {
-      target.closest('.task').lastElementChild.hidden = false;
+      taskObject.collapsed = false;
+
+      descr.hidden = false;
       target.dataset.action = 'collapse';
       target.textContent = 'Collapse';
-    };
+
+    } else if (target.dataset.action === 'done') {
+      taskObject.done = true;
+
+      title.classList.add('done');
+      descr.classList.add('done');
+      target.remove();
+
+    } else if (target.dataset.action === 'remove') {
+      const confirmed = confirm('Are you sure, you want to remove this item?');
+
+      if (confirmed) {
+        taskData.splice(taskData.indexOf(taskObject), 1);
+        task.remove();
+      }
+    }
   })

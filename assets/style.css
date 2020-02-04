@@ -86,3 +86,8 @@ input.task_title_name {
 .task_title_name {
   display: inline-block;
 }
+
+.done {
+  text-decoration: line-through;
+  color: silver;
+}

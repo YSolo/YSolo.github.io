@@ -123,3 +123,19 @@ document.querySelector('.new-task-form')
       form.querySelector('.task_title_name').focus();
     }
   })
+
+document.querySelector('.task-container')
+  .addEventListener('click', e => {
+    const target = e.target;
+
+    if (target.dataset.action === 'collapse') {
+      target.closest('.task').lastElementChild.hidden = true;
+      target.dataset.action = 'description';
+      target.textContent = 'Description';
+
+    } else if (target.dataset.action === 'description') {
+      target.closest('.task').lastElementChild.hidden = false;
+      target.dataset.action = 'collapse';
+      target.textContent = 'Collapse';
+    };
+  })

@@ -13,12 +13,29 @@
     <header class="header page__header">
       <h3 class="header_title">YDoIt? <span class="header_title_description">Task tracker<span></h3>
       <div class="header_buttons">
-        <button class="button header__button">HELP</button>
-        <button class="button header__button">ADD NEW TASK</button>
+        <button id="help" class="button header__button">HELP</button>
+        <button id="new_task_button" class="button header__button">ADD NEW TASK</button>
       </div>
     </header>
 
     <div class="content page__content">
+
+      <form class="new-task-form task" hidden>
+
+
+        <div class="task_title">
+
+
+          <input type='text' class="task_title_name" placeholder="title"></input>
+
+          <div class="task-buttons">
+            <button class="button task_button" name="save">Save</button>
+            <button class="button task_button" name="cancel">Cancel</button>
+          </div>
+        </div>
+        <input type='text' class="task_description" placeholder="Description"></input>
+
+      </form>
 
       <div class="task-container">
 
@@ -30,9 +47,10 @@
 
             <h3 class="task_title_name">Task 1</h3>
 
-            <button class="button task_button">Done</button>
-            <button class="button task_button">Collapse</button>
-
+            <div class="task-buttons">
+              <button class="button task_button" data-action="collapse">Collapse</button>
+              <button class="button task_button" data-action="done">Done</button>
+            </div>
 
           </div>
           <p class="task_description">Description for Task 1</p>
@@ -47,9 +65,10 @@
 
             <h3 class="task_title_name">Task 2</h3>
 
-            <button class="button task_button">Done</button>
-            <button class="button task_button">Collapse</button>
-
+            <div class="task-buttons">
+              <button class="button task_button" data-action="collapse">Collapse</button>
+              <button class="button task_button" data-action="done">Done</button>
+            </div>
 
           </div>
           <p class="task_description">Description for Task 2</p>
@@ -64,5 +83,6 @@
     </div>
 
 
+  <script src="assets/main.js"></script>
   </body>
 </html>

@@ -2,6 +2,18 @@ h3, h4, p {
   margin: 0 0 5px;
 }
 
+input {
+  border: 0;
+  font-family: inherit;
+  font-size: inherit;
+  margin-bottom: 5px;
+}
+
+input.task_title_name {
+  font-size: 1.17em;
+  font-weight: bold;
+}
+
 .page {
   font-family: Roboto, monospace;
   margin: 0;
@@ -50,16 +62,20 @@ h3, h4, p {
 }
 
 .task {
-  margin-bottom: 30px;
+  margin: 10px 0 30px 0;
 }
 
 .task_button {
   padding: 4px;
-  float: right;
-  margin: 0 5px;
+  margin: 0;
   border: 0;
   border-bottom: 1px solid darkgrey;
   border-right: 1px solid darkgrey;
+}
+
+.task-buttons {
+  float: right;
+  display: inline-block
 }
 
 .task_title {

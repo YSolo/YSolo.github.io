@@ -1,149 +1,76 @@
-/* quick reset */
-h1, h2, h3, h4, h5, h6, p, ul{
-  margin: 0 0 0.5em 0;
-  padding: 0;
-}
-
-li {
-  list-style-type: none;
-  padding-left:10px;
+h3, h4, p {
+  margin: 0 0 5px;
 }
 
 .page {
-  background: linear-gradient(snow 0%, gray 100%);
-  background-attachment: fixed;
-  font-family:'Roboto Mono', monospace;
-  color: dimgray;
+  font-family: Roboto, monospace;
   margin: 0;
 }
 
 .header {
-  background-color: white;
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid darkgrey;
 }
 
-.page-title {
-  font-size: 1.5em;
-  font-weight: 600;
+.header_title {
+  font-weight: 800;
+  margin: 0;
 }
 
-.header__page-title {
-  padding: 0.5em 0 0.5em 80px;
-  position: relative;
-  display: flex;
-}
-
-.page__main {
-  padding: 20px 60px;
-  margin: 0px 20px;
-}
-
-.main {
-  background: white;
-  border-radius: 0.1em;
-}
-
-.task {
-  margin-bottom: 2em;
-}
-
-.task__title {
-  text-decoration: underline;
-}
-
-.task_requirements {
+.header_title_description {
   color: darkgrey;
-  font-style: italic;
-  margin-bottom: 30px;
+}
+
+.page__header {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page__content {
+  padding: 20px;
 }
 
 .button {
-  padding: 0.5em;
-  border: 0.2em solid darkgrey;
-  background: transparent;
-  font: 16px monospace;
-  transition: all 0.2s;
-  border-radius: 0.2em;
+  padding: 10px;
+  font-family: Roboto, monospace;
+  background-color: transparent;
+  font-weight: bold;
+  border: 2px solid darkgrey;
+  border-radius: 5px;
 }
 
 .button:hover {
-  background: darkgrey;
-  color: white
+  background-color: darkgrey;
+  color: white;
 }
 
 .button:active {
-  background: grey;
+  background-color: grey;
 }
 
-/* Task specific css */
-.box-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+.task {
+  margin-bottom: 30px;
 }
 
-.box {
-  height: 100px;
-  width: 100px;
-  background-color: steelblue;
-  margin: 10px;
-  align-items: center;
-  display: flex;
-  cursor: pointer;
+.task_button {
+  padding: 4px;
+  float: right;
+  margin: 0 5px;
+  border: 0;
+  border-bottom: 1px solid darkgrey;
+  border-right: 1px solid darkgrey;
 }
 
-.note {
-  opacity: 80%;
-  padding: 5px;
-  margin: 10px;
-  background-color: white;
+.task_title {
+  border-bottom: 1px solid darkgrey;
+  margin-bottom: 10px;
 }
 
-.box_isHled {
-  background-color: cornflowerblue;
+.task_title_name {
+  display: inline-block;
 }
 
-.collapsables_title {
-  cursor: pointer;
-}
+.task_description {
 
-.collapsables_title:hover {
-  text-decoration: underline;
-}
-
-.hidden {
-  display:none;
-}
-
-.tabs-container_content {
-  width: auto;
-  height: 60px;
-  padding: 20px;
-  background-color: lightgrey;
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content_current {
-  display: block;
-}
-
-.tabs {
-  display: flex;
-}
-
-.tab {
-  background-color: silver;
-  height: auto;
-  width: 100px;
-  padding: 5px 10px;
-  border-radius: 10px 10px 0 0;
-  border-right: 1px solid dimgray;
-  cursor: pointer;
-}
-
-.tab_active {
-  background-color: lightgrey;
 }

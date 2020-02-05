@@ -1,6 +1,12 @@
 'use strict';
 
-const taskData = [];
+let taskData = [];
+
+if (localStorage.getItem('tasks')) {
+  taskData = JSON.parse(localStorage.getItem('tasks'));
+  renderTasks(taskData);
+}
+
 
 // constructor function for new Task
 function Task(title, description) {
@@ -10,6 +16,16 @@ function Task(title, description) {
   this.collapsed = description ? false : true;
   this.id = Date.now().toString(36) + Math.random().toString(36).substring(2,5);
   this.date = new Date();
+}
+
+// Helper function to create buttons
+function createTaskButton (text, dataAction) {
+  const $taskButton = document.createElement('button');
+  $taskButton.className = 'button task_button';
+  $taskButton.setAttribute('data-action', dataAction);
+  $taskButton.textContent = text;
+
+  return $taskButton;
 }
 
 // create div structure for the given Task
@@ -35,23 +51,13 @@ function createTaskDiv(taskObj) {
       const $taskButtons = document.createElement('div');
       $taskButtons.className = 'task-buttons';
 
-        const $taskButtonRemove = document.createElement('button');
-        $taskButtonRemove.className = 'button task_button';
-        $taskButtonRemove.setAttribute('data-action', 'remove');
-        $taskButtonRemove.textContent = 'Remove';
-        $taskButtons.appendChild($taskButtonRemove);
+        if (!taskObj.done) $taskButtons.appendChild(createTaskButton('Edit', 'edit'));
 
-        const $taskButtonCollapse = document.createElement('button');
-        $taskButtonCollapse.className = 'button task_button';
-        $taskButtonCollapse.setAttribute('data-action', 'collapse');
-        $taskButtonCollapse.textContent = 'Collapse';
-        $taskButtons.appendChild($taskButtonCollapse);
+        $taskButtons.appendChild(createTaskButton('Remove', 'remove'));
 
-        const $taskButtonDone = document.createElement('button');
-        $taskButtonDone.className = 'button task_button';
-        $taskButtonDone.setAttribute('data-action', 'done');
-        $taskButtonDone.textContent = 'Done';
-        $taskButtons.appendChild($taskButtonDone);
+        $taskButtons.appendChild(createTaskButton('Collapse', 'collapse'));
+
+        if (!taskObj.done) $taskButtons.appendChild(createTaskButton('Done', 'done'));
 
       $taskTitleDiv.appendChild($taskButtons);
 
@@ -62,9 +68,9 @@ function createTaskDiv(taskObj) {
   $taskDescription.textContent = taskObj.description;
   if (taskObj.done) {
     $taskDescription.classList.add('done');
-  } else if (taskObj.collapsed) {
-    $taskDescription.hidden = true;
   }
+
+  $taskDescription.hidden = taskObj.collapsed ? true : false;
   $taskDiv.appendChild($taskDescription);
 
   return $taskDiv;
@@ -80,7 +86,19 @@ function renderTasks(listOfTasks) {
     taskContainer.appendChild(createTaskDiv(task));
 
   })
+
+  document.querySelector('.completed').textContent = listOfTasks.reduce((acc, t) => acc + (t.done === true), 0);
+  document.querySelector('.total').textContent = listOfTasks.reduce((acc, t) => acc + 1, 0);
 }
+
+document.querySelector("#clear")
+  .addEventListener('click', e => {
+    const confirmed = confirm("All data will be cleared. Are you sure you want it?")
+    if (confirmed) {
+      localStorage.clear();
+      location.reload();
+    }
+  })
 
 document.querySelector("#help")
   .addEventListener('click', e => {
@@ -102,7 +120,6 @@ document.querySelector("#help")
 
       Данные должны сохраняться при обновлении страницы
 
-      // Чтобы редактировать заметку - кликни на нее дважды
     `)
   })
 
@@ -133,14 +150,16 @@ document.querySelector('.new-task-form')
       const title = form.querySelector('.task_title_name').value;
       const descr = form.querySelector('.task_description').value;
 
-      if (!title) {
-        alert('Please enter valid task name');
+      if (!title || !descr) {
+        alert('Please enter valid task name & description');
         return;
       }
 
       const task = new Task(title, descr);
       taskData.unshift(task);
       renderTasks(taskData);
+
+      localStorage.setItem('tasks', JSON.stringify(taskData));
 
       form.reset();
       form.querySelector('.task_title_name').focus();
@@ -150,38 +169,68 @@ document.querySelector('.new-task-form')
 document.querySelector('.task-container')
   .addEventListener('click', e => {
     const target = e.target;
+    if (!target.classList.contains("task_button")) return;
     const task = target.closest('.task');
+    if (!task) return;
     const title = task.querySelector('.task_title_name');
     const descr = task. querySelector('.task_description');
     const taskObject = taskData.find(taskObj => taskObj.id === task.id);
 
-    if (target.dataset.action === 'collapse') {
-      taskObject.collapsed = true;
+    switch (target.dataset.action) {
+      case 'collapse':
+      taskObject.collapsed = !taskObject.collapsed;
+      break;
 
-      descr.hidden = true;
-      target.dataset.action = 'description';
-      target.textContent = 'Description';
+      case 'edit':
+      const buttons = task.querySelector('.task-buttons');
+      buttons.innerHTML = '';
 
-    } else if (target.dataset.action === 'description') {
-      taskObject.collapsed = false;
+      buttons.appendChild(createTaskButton('Save changes', 'save'));
+      buttons.appendChild(createTaskButton('Cancel', 'cancel'));
 
-      descr.hidden = false;
-      target.dataset.action = 'collapse';
-      target.textContent = 'Collapse';
+      const titleInput = document.createElement('input')
+      titleInput.className = "task_title_name";
+      titleInput.type = 'text';
+      titleInput.value = title.textContent;
+      title.replaceWith(titleInput);
+      titleInput.focus();
 
-    } else if (target.dataset.action === 'done') {
-      taskObject.done = true;
+      const descrInput = document.createElement('input')
+      descrInput.className = "task_description";
+      descrInput.type = 'text';
+      descrInput.value = descr.textContent;
+      descr.replaceWith(descrInput);
 
-      title.classList.add('done');
-      descr.classList.add('done');
-      target.remove();
+      buttons.addEventListener ('click',  e => {
 
-    } else if (target.dataset.action === 'remove') {
-      const confirmed = confirm('Are you sure, you want to remove this item?');
+        if (e.target.dataset.action === 'save') {
+          const confirmed = confirm("Are you sure?");
+          if (confirmed) {
+            taskObject.title = titleInput.value;
+            taskObject.description = descrInput.value;
+          }
+        }
 
-      if (confirmed) {
-        taskData.splice(taskData.indexOf(taskObject), 1);
-        task.remove();
-      }
+        if (!e.target.dataset.action === 'cancel') return;
+
+      }, {once: true});
+      break;
+
+      case 'done':
+        taskObject.done = true;
+      break;
+
+      case 'remove':
+        const confirmed = confirm('Are you sure, you want to remove this item?');
+
+        if (confirmed) {
+          taskData.splice(taskData.indexOf(taskObject), 1);
+        }
+      break;
+    }
+
+    localStorage.setItem('tasks', JSON.stringify(taskData));
+    if (!(e.target.dataset.action === 'edit')) {
+      renderTasks(taskData);
     }
   })

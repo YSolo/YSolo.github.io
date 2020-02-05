@@ -85,9 +85,17 @@ input.task_title_name {
 
 .task_title_name {
   display: inline-block;
+  width: auto;
 }
 
 .done {
   text-decoration: line-through;
   color: silver;
+}
+
+.footer {
+  padding: 20px;
+  margin: 0;
+  background-color: darkgrey;
+  color: white;
 }

@@ -7,7 +7,6 @@ if (localStorage.getItem('tasks')) {
   renderTasks(taskData);
 }
 
-
 // constructor function for new Task
 function Task(title, description) {
   this.title = title;
@@ -15,7 +14,7 @@ function Task(title, description) {
   this.done = false;
   this.collapsed = description ? false : true;
   this.id = Date.now().toString(36) + Math.random().toString(36).substring(2,5);
-  this.date = new Date();
+  this.date = new moment().format("DD.MM.YYYY HH:MM");
 }
 
 // Helper function to create buttons
@@ -50,6 +49,11 @@ function createTaskDiv(taskObj) {
 
       const $taskButtons = document.createElement('div');
       $taskButtons.className = 'task-buttons';
+
+        const time = document.createElement('div');
+        time.classList.add('time');
+        time.textContent = taskObj.date;
+        $taskButtons.appendChild(time);
 
         if (!taskObj.done) $taskButtons.appendChild(createTaskButton('Edit', 'edit'));
 
@@ -89,6 +93,7 @@ function renderTasks(listOfTasks) {
 
   document.querySelector('.completed').textContent = listOfTasks.reduce((acc, t) => acc + (t.done === true), 0);
   document.querySelector('.total').textContent = listOfTasks.reduce((acc, t) => acc + 1, 0);
+  document.querySelector('.remaining').textContent = listOfTasks.reduce((acc, t) => acc + (t.done === false), 0);
 }
 
 document.querySelector("#clear")

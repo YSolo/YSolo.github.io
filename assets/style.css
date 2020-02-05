@@ -14,6 +14,11 @@ input.task_title_name {
   font-weight: bold;
 }
 
+@viewport {
+  width: device-width ;
+  zoom: 1.0 ;
+}
+
 .page {
   font-family: Roboto, monospace;
   margin: 0;
